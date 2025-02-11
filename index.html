@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O meu nome é ZÉ</title>
+    <title>Olá pessoal o meu nome é ZÉ</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <style>
           body {
             font-family: Arial, sans-serif;
@@ -36,8 +37,12 @@
             background-position: center;
             border-radius: 50%;
             opacity: 0.65;
-            overflow: hidden;
             z-index: 200;
+            cursor: pointer;
+        }
+
+        .circle :hover {
+            transform: scale(1.2);
         }
 
 
@@ -80,11 +85,23 @@
             background-color: rgba(0, 255, 17, 0.8);
             box-shadow: 0px 0px 25px rgbargba(0, 255, 17, 0.8);
         }
+
+        #backgroundCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* Coloca o canvas atrás do conteúdo */
+}
     </style>
 </head>
 
 <body>
+    <canvas id="backgroundCanvas"></canvas>
     <section>
+    
     <div class="background-circles">
         <div class="circle" style="background-image: url('images/zezeback.png');"></div>
         <div class="circle" style="background-image: url('images/zezeback2.png');"></div>
@@ -192,6 +209,96 @@
                     moveCircle(); // Inicia o movimento
                 });
             });
+
+            document.querySelectorAll(".circle").forEach(circle => {
+    circle.addEventListener("mouseenter", () => {
+        let sound = new Audio("audio/AUDIO-2024-05-02-16-39-57.m4a"); // Coloque um som zoado aqui
+        sound.play();
+    });
+});
+
+document.addEventListener("mousemove", (e) => {
+    let trail = document.createElement("div");
+    trail.style.position = "absolute";
+    trail.style.left = e.pageX + "px";
+    trail.style.top = e.pageY + "px";
+    trail.style.width = "20px";
+    trail.style.height = "20px";
+    trail.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    trail.style.borderRadius = "50%";
+    trail.style.opacity = "0.7";
+    document.body.appendChild(trail);
+    setTimeout(() => trail.remove(), 500);
+});
+
+const canvas = document.getElementById("backgroundCanvas");
+    const ctx = canvas.getContext("2d");
+    const colors = ["rgba(255, 255, 255, ALPHA)", "rgba(173, 216, 230, ALPHA)", "rgba(255, 223, 0, ALPHA)"];
+
+
+
+    // Ajusta o tamanho do canvas
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    // Configurações das estrelas
+    const stars = [];
+    const totalStars = 1000; // Número total de estrelas
+
+    // Inicializa as estrelas
+    function createStars() {
+        for (let i = 0; i < totalStars; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2, // Tamanho aleatório
+                alpha: Math.random(), // Brilho inicial
+                alphaChange: Math.random() * 0.02 - 0.01, // Velocidade de mudança do brilho
+            });
+        }
+    }
+
+    // Atualiza o brilho das estrelas
+    function updateStars() {
+        stars.forEach((star) => {
+            star.alpha += star.alphaChange;
+
+            // Inverte o brilho ao atingir os limites
+            if (star.alpha <= 0 || star.alpha >= 1) {
+                star.alphaChange *= -1;
+            }
+        });
+    }
+
+    // Desenha as estrelas no canvas
+    function drawStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(0, 0, 0, 1)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        stars.forEach((star) => {
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`; // Brilho dinâmico
+            ctx.fill();
+        });
+    }
+
+
+    // Loop de animação
+    function animate() {
+        updateStars();
+        drawStars();
+        requestAnimationFrame(animate);
+    }
+
+    createStars();
+    animate();
+
 
 
     </script>
