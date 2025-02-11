@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O meu nome é ZÉ</title>
+    <style>
+          body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Fundo animado */
+        .background-circles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            opacity: 0.65;
+            overflow: hidden;
+            z-index: 200;
+        }
+
+
+
+
+        /* Drum Pad */
+        .drum-pad {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(4, 120px);
+            grid-template-rows: repeat(2, 120px);
+            gap: 15px;
+            padding: 20px;
+            background: rgba(17, 17, 17, 0.9);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        .pad {
+            width: 120px;
+            height: 120px;
+            background-color: #333;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s, box-shadow 0.2s;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0px 0px 15px rgba(0, 255, 17, 0.8);
+        }
+
+        .pad:active {
+            transform: scale(0.9);
+            background-color: rgba(0, 255, 17, 0.8);
+            box-shadow: 0px 0px 25px rgbargba(0, 255, 17, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+    <div class="background-circles">
+        <div class="circle" style="background-image: url('images/zezeback.png');"></div>
+        <div class="circle" style="background-image: url('images/zezeback2.png');"></div>
+        <div class="circle" style="background-image: url('images/totoback.png');"></div>
+        <div class="circle" style="background-image: url('images/aleback3.png');"></div>
+        <div class="circle" style="background-image: url('images/aleback2.png');"></div>
+        <div class="circle" style="background-image: url('images/aleback.png');"></div>
+        <div class="circle" style="background-image: url('images/fernandoback.png');"></div>
+        <div class="circle" style="background-image: url('images/fernandoback2.png');"></div>
+        <div class="circle" style="background-image: url('images/katoback.png');"></div>
+        <div class="circle" style="background-image: url('images/zezeback3.png');"></div>
+        <div class="circle" style="background-image: url('images/jilhoback.png');"></div>
+        <div class="circle" style="background-image: url('images/fredback.png');"></div>
+        <div class="circle" style="background-image: url('images/focatoback.png');"></div>
+        <div class="circle" style="background-image: url('images/teagoback.png');"></div>
+        <div class="circle" style="background-image: url('images/malucoback.png');"></div>
+
+
+ 
+
+
+
+
+
+
+
+
+    </div>
+    
+    <div class="drum-pad">
+        <div class="pad" data-sound="audio1" style="background-image: url('images/ze1.png');">Q</div>
+        <div class="pad" data-sound="audio2" style="background-image: url('images/ze2.png');">W</div>
+        <div class="pad" data-sound="audio3" style="background-image: url('images/ze3.png');">E</div>
+        <div class="pad" data-sound="audio4" style="background-image: url('images/ze4.png');">R</div>
+        <div class="pad" data-sound="audio5" style="background-image: url('images/pad5.png');">A</div>
+        <div class="pad" data-sound="audio6" style="background-image: url('images/pad6.png');">S</div>
+        <div class="pad" data-sound="audio7" style="background-image: url('images/pad7.png');">D</div>
+        <div class="pad" data-sound="audio8" style="background-image: url('images/pad8.png');">F</div>
+    </div>
+    </section>
+
+    <script>
+        const sounds = {
+            "audio1": new Audio("audio/AUDIO-2024-05-02-16-39-42.m4a"),
+            "audio2": new Audio("audio/AUDIO-2024-05-02-16-39-45.m4a"),
+            "audio3": new Audio("audio/AUDIO-2024-05-02-16-39-38.m4a"),
+            "audio4": new Audio("audio/AUDIO-2024-05-02-16-40-03.m4a"),
+            "audio5": new Audio("audio/AUDIO-2024-05-02-16-40-07.m4a"),
+            "audio6": new Audio("audio/AUDIO-2024-05-02-16-39-54.m4a"),
+            "audio7": new Audio("audio/AUDIO-2024-05-02-16-39-57.m4a"),
+            "audio8": new Audio("audio/AUDIO-2024-05-02-16-39-49.m4a"),
+        };
+
+        document.querySelectorAll(".pad").forEach(pad => {
+            pad.addEventListener("click", () => {
+                const sound = pad.getAttribute("data-sound");
+                sounds[sound].currentTime = 0;
+                sounds[sound].play();
+            });
+        });
+
+        document.addEventListener("keydown", (event) => {
+            const keyMap = {
+                "q": "audio1",
+                "w": "audio2",
+                "e": "audio3",
+                "r": "audio4",
+                "a": "audio5",
+                "s": "audio6",
+                "d": "audio7",
+                "f": "audio8",
+            };
+            const sound = keyMap[event.key.toLowerCase()];
+            if (sound) {
+                sounds[sound].currentTime = 0;
+                sounds[sound].play();
+            }
+        });
+
+                document.addEventListener("DOMContentLoaded", () => {
+                const circles = document.querySelectorAll(".circle");
+
+                circles.forEach(circle => {
+                    let x = Math.random() * (window.innerWidth - 100);
+                    let y = Math.random() * (window.innerHeight - 100);
+                    let dx = (Math.random() - 0.5) * 4; // Direção X (aleatória)
+                    let dy = (Math.random() - 0.5) * 4; // Direção Y (aleatória)
+                    let angle = 0; // Ângulo inicial
+
+                    function moveCircle() {
+                        // Atualiza posição
+                        x += dx;
+                        y += dy;
+                        angle += 1; // Define rotação contínua
+
+                        // Impede que o círculo saia da tela
+                        if (x <= 0 || x >= window.innerWidth - 100) dx *= -1;
+                        if (y <= 0 || y >= window.innerHeight - 100) dy *= -1;
+
+                        circle.style.transform = `translate(${x}px, ${y}px) rotate(${angle}deg)`;
+
+                        requestAnimationFrame(moveCircle); // Chama a função continuamente
+                    }
+
+                    moveCircle(); // Inicia o movimento
+                });
+            });
+
+
+    </script>
+</body>
+
+</html>
